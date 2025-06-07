@@ -2,21 +2,20 @@ package com.northcoders.jv_exhibition_curation;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.navigation.NavigationBarView;
+import com.northcoders.jv_exhibition_curation.ui.HomepageFragment;
+import com.northcoders.jv_exhibition_curation.ui.SearchArtworks;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     NavigationBarView navigationBarView;
     HomepageFragment homepageFragment = new HomepageFragment();
+
+    SearchArtworks searchArtworks = new SearchArtworks();
 
 
     @Override
@@ -41,7 +40,14 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
                     .commit();
             return true;
         }
-        return false;
+
+        if (item.getItemId() == R.id.search_button) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.baseFragment, searchArtworks)
+                    .commit();
+        }
+        return true;
 }
 }
 
