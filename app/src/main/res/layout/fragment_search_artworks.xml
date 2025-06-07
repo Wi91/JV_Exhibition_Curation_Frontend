@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/custom_color_2">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.SearchArtworks"
+        >
+
+        <TextView
+            android:id="@+id/searchArtworkTitle"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"
+            android:text="Search Artworks..."
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            />
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/search_bar"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/searchArtworkTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <ImageButton
+            android:id="@+id/previousButton"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toBottomOf="@id/search_bar"
+            app:layout_constraintStart_toStartOf="@id/search_bar"
+            app:layout_constraintEnd_toStartOf="@id/nextButton"
+            android:src="@drawable/back_arrow"
+            android:background="@color/custom_color_2"
+            />
+
+        <ImageButton
+            android:id="@+id/nextButton"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            app:layout_constraintEnd_toEndOf="@id/search_bar"
+            app:layout_constraintTop_toBottomOf="@id/search_bar"
+            app:layout_constraintStart_toEndOf="@id/previousButton"
+            android:src="@drawable/forward_arrow"
+            android:background="@color/custom_color_2"
+            />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/nextButton"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
+</layout>
