@@ -22,13 +22,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="80dp"
-            android:textSize="60sp"
+            android:textSize="80sp"
             android:text="Museo"
+            android:fontFamily="@font/indie_flower_regular"
             android:textColor="@color/white"
             android:gravity="center"
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/viewAllArtworksButton"
             android:layout_width="300dp"
             android:layout_height="75dp"
@@ -37,10 +38,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="100dp"
             android:text="View All Artworks"
+            android:textColor="@color/white"
             android:textSize="25sp"
+            android:fontFamily="@font/indie_flower_regular"
+            android:background="@drawable/homepage_buttons"
+
             />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/searchArtworksButton"
             android:layout_width="300dp"
             android:layout_height="75dp"
@@ -50,6 +55,9 @@
             android:layout_marginTop="40dp"
             android:text="Search Artworks"
             android:textSize="25sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/indie_flower_regular"
+            android:background="@drawable/homepage_buttons"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
