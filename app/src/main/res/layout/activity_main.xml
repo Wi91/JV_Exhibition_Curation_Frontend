@@ -28,8 +28,9 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:menu="@menu/bottom_navbar_menu"
     app:itemIconSize="40dp"
-    app:itemIconTint="@color/white"
+    app:itemIconTint="@color/custom_selector_1"
     android:background="@color/custom_color_1"
+    app:itemActiveIndicatorStyle="@style/Widget.Design.BottomNavigationView"
     />
 
 
