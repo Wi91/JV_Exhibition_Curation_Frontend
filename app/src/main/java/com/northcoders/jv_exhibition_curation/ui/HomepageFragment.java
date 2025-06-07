@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.android.material.navigation.NavigationBarView;
+import com.northcoders.jv_exhibition_curation.MainActivity;
 import com.northcoders.jv_exhibition_curation.R;
 import com.northcoders.jv_exhibition_curation.databinding.FragmentHomepageBinding;
 
@@ -55,6 +57,10 @@ FragmentHomepageBinding binding;
                         .beginTransaction()
                         .replace(R.id.baseFragment, searchArtworks)
                         .commit();
+                NavigationBarView nav = getActivity().findViewById(R.id.bottomNavBar);
+                nav.setOnItemSelectedListener(null); // Temporarily remove listener
+                nav.setSelectedItemId(R.id.search_button); // Update UI highlight only
+                nav.setOnItemSelectedListener((MainActivity) getActivity()); // Re-attach listener
             }
         });
     }
