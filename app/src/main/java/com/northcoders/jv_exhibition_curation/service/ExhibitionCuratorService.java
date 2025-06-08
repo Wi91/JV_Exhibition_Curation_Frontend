@@ -1,6 +1,7 @@
 package com.northcoders.jv_exhibition_curation.service;
 
 import com.northcoders.jv_exhibition_curation.model.Artwork;
+import com.northcoders.jv_exhibition_curation.model.Exhibition;
 
 import java.util.List;
 
@@ -12,5 +13,8 @@ public interface ExhibitionCuratorService {
 
     @GET("artwork/home")
     Call<List<Artwork>> getAllHomeArtworks (@Query(value = "page")Integer page);
+
+    @GET("exhibitions")
+    Call<List<Exhibition>> getAllExhibitions ();
 
 }
