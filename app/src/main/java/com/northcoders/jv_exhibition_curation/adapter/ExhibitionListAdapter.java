@@ -45,6 +45,7 @@ public class ExhibitionListAdapter extends RecyclerView.Adapter<ExhibitionListAd
     @Override
     public void onBindViewHolder(@NonNull ExhibitionListViewHolder holder, int position) {
         Exhibition exhibition = exhibitionList.get(position);
+        holder.binding.setExhibitionList(exhibition);
 
     }
 
