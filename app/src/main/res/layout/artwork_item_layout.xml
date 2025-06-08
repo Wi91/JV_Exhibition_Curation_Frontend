@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="artworkList"
+            name="artwork"
             type="com.northcoders.jv_exhibition_curation.model.Artwork" />
     </data>
 
@@ -42,6 +42,7 @@
         android:hint="Artwork Name"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
+        android:text="@{artwork.title}"
         />
 
     <TextView
@@ -55,6 +56,7 @@
         android:hint="Artist Name"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
+        android:text="@{artwork.artistName}"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
