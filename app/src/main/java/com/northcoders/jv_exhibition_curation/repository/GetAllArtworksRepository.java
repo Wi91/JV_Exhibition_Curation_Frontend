@@ -9,6 +9,7 @@ import com.northcoders.jv_exhibition_curation.model.Artwork;
 import com.northcoders.jv_exhibition_curation.service.ExhibitionCuratorService;
 import com.northcoders.jv_exhibition_curation.service.RetroFitInstance;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -38,6 +39,7 @@ public class GetAllArtworksRepository {
                     List<Artwork> artworkList = response.body();
                     mutableLiveData.setValue(artworkList);
                 } else {
+                    mutableLiveData.setValue(new ArrayList<>());
                     //TODO Different toasts for different codes
                     Toast.makeText(application, "Network Error", Toast.LENGTH_SHORT).show();
                 }

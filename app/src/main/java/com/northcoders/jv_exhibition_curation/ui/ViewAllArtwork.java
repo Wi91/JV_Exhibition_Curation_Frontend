@@ -55,10 +55,48 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         counter = 1;
+        enableNavButtons("previous", false);
+        initialiseNavButtons();
         getAllArtworkResults(counter);
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             if(isLoading != null){
                 binding.ViewAllArtworksProgressBar.setVisibility(isLoading ? VISIBLE:GONE);
+            }
+        });
+    }
+
+    private void enableNavButtons(String button, Boolean isEnabled){
+        switch(button){
+            case "next":
+            binding.nextButton.setEnabled(isEnabled);
+            break;
+            case "previous":
+                binding.previousButton.setEnabled(isEnabled);
+                break;
+        }
+    }
+
+    private void initialiseNavButtons(){
+        previousButton();
+        nextButton();
+    }
+
+    private void previousButton(){
+        binding.previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getAllArtworkResults(counter - 1);
+            }
+        });
+    }
+
+    private void nextButton(){
+        binding.nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getAllArtworkResults(counter + 1);
+
             }
         });
     }
@@ -68,6 +106,24 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
             @Override
             public void onChanged(List<Artwork> artworks) {
                 artworksList = (ArrayList<Artwork>) artworks;
+                counter = page;
+                if(page == 1){
+                    enableNavButtons("previous", false);
+                } else {
+                    enableNavButtons("previous", true);
+                }
+//                if(page == 1){
+//                    counter =1;
+//                }
+//                if(artworksList.isEmpty()){
+//                    enableNavButtons("next", false);
+//                } else {
+//                    enableNavButtons("next", true);
+//                    if(page != 1){
+//                        counter++;
+//                    }
+//                }
+//                enableNavButtons("previous", page > 1);
                 displayInRecyclerView();
             }
         });
