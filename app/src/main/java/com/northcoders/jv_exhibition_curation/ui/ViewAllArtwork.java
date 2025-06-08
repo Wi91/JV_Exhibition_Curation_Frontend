@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.northcoders.jv_exhibition_curation.R;
+import com.northcoders.jv_exhibition_curation.adapter.RecyclerViewInterface;
 
 
-public class ViewAllArtwork extends Fragment {
+public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
 
 
     public ViewAllArtwork() {}
@@ -26,5 +27,10 @@ public class ViewAllArtwork extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_view_all, container, false);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }
