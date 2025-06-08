@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="Artwork"
+            type="com.northcoders.jv_exhibition_curation.model.Artwork" />
+    </data>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,9 +28,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="95dp"
         android:hint="Artwork Name"
-        android:textSize="35sp"
+        android:textSize="25sp"
         android:gravity="center"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
@@ -47,19 +52,20 @@
             android:textColor="@color/white"
             />
 
-        <TextView
-            android:id="@+id/apiId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:hint="Api ID"
-            android:textColorHint="@android:color/darker_gray"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="12dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+<!--        <TextView-->
+<!--            android:id="@+id/apiId"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:hint="Api ID"-->
+<!--            android:text="@{Artwork.apiId}"-->
+<!--            android:textColorHint="@android:color/darker_gray"-->
+<!--            android:textColor="@android:color/darker_gray"-->
+<!--            android:textSize="12dp"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            />-->
 
         <ImageView
             android:id="@+id/artworkImage"
@@ -87,7 +93,9 @@
             android:hint="Artwork Description"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="16dp"
+            android:textSize="20dp"
+            android:scrollbars="vertical"
+            android:overScrollMode="ifContentScrolls"
             />
 
         <androidx.appcompat.widget.AppCompatButton
