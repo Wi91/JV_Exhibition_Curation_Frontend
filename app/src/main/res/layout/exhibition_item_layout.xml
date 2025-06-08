@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/artwork_listing"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="120dp"
         android:layout_marginBottom="15dp"
         app:cardCornerRadius="20dp"
         >
@@ -28,10 +28,12 @@
         android:textSize="32sp"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
+        android:fontFamily="@font/indie_flower_regular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@{exhibitionList.title}"
         />
 
 
