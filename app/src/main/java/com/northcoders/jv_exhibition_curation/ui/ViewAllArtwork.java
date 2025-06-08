@@ -91,6 +91,15 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
 
     @Override
     public void onItemClick(int position) {
-
+        Artwork artwork = artworksList.get(position);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("ARTWORK", artwork);
+        AddArtworkFragment addArtworkFragment = new AddArtworkFragment();
+        addArtworkFragment.setArguments(bundle);
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.baseFragment, addArtworkFragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
