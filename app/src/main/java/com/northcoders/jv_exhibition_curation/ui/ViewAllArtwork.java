@@ -1,8 +1,16 @@
 package com.northcoders.jv_exhibition_curation.ui;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +18,29 @@ import android.view.ViewGroup;
 
 import com.northcoders.jv_exhibition_curation.R;
 import com.northcoders.jv_exhibition_curation.adapter.RecyclerViewInterface;
+import com.northcoders.jv_exhibition_curation.adapter.ViewAllArtworksAdapter;
+import com.northcoders.jv_exhibition_curation.databinding.FragmentViewAllBinding;
+import com.northcoders.jv_exhibition_curation.model.Artwork;
+import com.northcoders.jv_exhibition_curation.viewmodel.ViewAllResultsViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
+
+    FragmentViewAllBinding binding;
+
+    ViewAllResultsViewModel viewModel;
+
+    int counter;
+
+    ArrayList<Artwork> artworksList;
+
+    RecyclerView recyclerView;
+
+    ViewAllArtworksAdapter adapter;
+
 
 
     public ViewAllArtwork() {}
@@ -20,13 +48,45 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(ViewAllResultsViewModel.class);
+    }
+
+    @Override
+    public void onViewCreated(View view,Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        counter = 1;
+        getAllArtworkResults(counter);
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if(isLoading != null){
+                binding.ViewAllArtworksProgressBar.setVisibility(isLoading ? VISIBLE:GONE);
+            }
+        });
+    }
+
+    private void getAllArtworkResults(Integer page) {
+        viewModel.getAllArtworks(page).observe(getViewLifecycleOwner(), new Observer<List<Artwork>>() {
+            @Override
+            public void onChanged(List<Artwork> artworks) {
+                artworksList = (ArrayList<Artwork>) artworks;
+                displayInRecyclerView();
+            }
+        });
+    }
+
+    private void displayInRecyclerView() {
+        recyclerView = binding.artworksRecyclerView;
+        adapter = new ViewAllArtworksAdapter(artworksList, this.getContext(), this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setHasFixedSize(true);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_view_all, container, false);
+       binding = DataBindingUtil.inflate(inflater, R.layout.fragment_view_all, container, false);
+        return binding.getRoot();
     }
 
     @Override
