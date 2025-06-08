@@ -23,6 +23,6 @@ public class ArtworkFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_artwork, container, false);
+        return inflater.inflate(R.layout.fragment_add_artwork, container, false);
     }
 }
