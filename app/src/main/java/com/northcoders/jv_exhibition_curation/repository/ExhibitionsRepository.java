@@ -88,23 +88,23 @@ public class ExhibitionsRepository {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 isLoading.setValue(true);
                 switch(response.code()) {
-                    case 201:
+                    case 200:
                         Toast.makeText(application, "Artwork Added", Toast.LENGTH_SHORT).show();
                         break;
                     case 404:
-                        Toast.makeText(application, "Exhibition does not exist", Toast.LENGTH_SHORT);
+                        Toast.makeText(application, "Exhibition does not exist", Toast.LENGTH_SHORT).show();
                         break;
                     case 409:
-                        Toast.makeText(application, "Artwork already added", Toast.LENGTH_SHORT);
+                        Toast.makeText(application, "Artwork already added", Toast.LENGTH_SHORT).show();
                         break;
                     default:
-                        Toast.makeText(application, "Request Failed", Toast.LENGTH_SHORT);
+                        Toast.makeText(application, "Request Failed", Toast.LENGTH_SHORT).show();
                 }
                 }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(application, "Failed to add artwork", Toast.LENGTH_SHORT);
+                Toast.makeText(application, "Failed to add artwork", Toast.LENGTH_SHORT).show();
             }
         });
 
