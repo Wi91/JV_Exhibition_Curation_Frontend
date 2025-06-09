@@ -7,14 +7,18 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ExhibitionCuratorService {
 
     @GET("artwork/home")
-    Call<List<Artwork>> getAllHomeArtworks (@Query(value = "page")Integer page);
+    Call<List<Artwork>> getAllHomeArtworks(@Query(value = "page") Integer page);
 
     @GET("exhibitions")
-    Call<List<Exhibition>> getAllExhibitions ();
+    Call<List<Exhibition>> getAllExhibitions();
+
+    @POST("exhibitions")
+    Call<Void> createNewExhibition();
 
 }

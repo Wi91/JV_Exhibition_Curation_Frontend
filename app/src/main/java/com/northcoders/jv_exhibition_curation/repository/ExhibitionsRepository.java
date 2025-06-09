@@ -53,4 +53,30 @@ public class ExhibitionsRepository {
         });
         return liveExhibitions;
     }
+
+    public void createNewExhibition(MutableLiveData<Boolean> isLoading){
+        ExhibitionCuratorService service = RetroFitInstance.getService();
+
+        Call<Void> call = service.createNewExhibition();
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                isLoading.setValue(false);
+                if(response.code() == 201){
+                    Toast.makeText(application, "Exhibition Created", Toast.LENGTH_SHORT);
+                } else {
+                    Toast.makeText(application, "Cannot create new exhibition", Toast.LENGTH_SHORT);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                isLoading.setValue(false);
+                Toast.makeText(application, "Request Failed", Toast.LENGTH_SHORT);
+
+
+            }
+        });
+    }
 }

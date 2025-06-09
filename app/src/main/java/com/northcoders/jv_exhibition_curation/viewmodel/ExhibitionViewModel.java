@@ -32,4 +32,9 @@ public class ExhibitionViewModel extends AndroidViewModel {
     public LiveData<Boolean> getIsLoading(){
         return isLoading;
     }
+
+    public void createNewExhibition(){
+        isLoading.setValue(true);
+        repository.createNewExhibition(isLoading);
+    }
 }

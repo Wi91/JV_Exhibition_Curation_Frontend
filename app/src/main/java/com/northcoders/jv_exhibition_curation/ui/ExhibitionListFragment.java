@@ -57,7 +57,13 @@ public class ExhibitionListFragment extends Fragment implements RecyclerViewInte
     }
 
     private void initialiseAddExhibitionButton(){
-
+        binding.createNewExhibitionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.createNewExhibition();
+                getAllExhibitionResults();
+            }
+        });
     }
 
     private void getAllExhibitionResults(){
@@ -74,7 +80,7 @@ public class ExhibitionListFragment extends Fragment implements RecyclerViewInte
         super.onCreate(savedInstanceState);
 
         getAllExhibitionResults();
-
+        initialiseAddExhibitionButton();
     }
 
     @Override
