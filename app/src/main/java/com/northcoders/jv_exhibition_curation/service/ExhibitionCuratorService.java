@@ -25,5 +25,5 @@ public interface ExhibitionCuratorService {
     Call<Void> createNewExhibition();
 
     @POST("exhibitions/{exhibitionId}/artworks")
-    Call<Void> addArtworkToExhibition(@Path("id") Long exhibitionId, @Body ApiArtworkId artworkId);
+    Call<Void> addArtworkToExhibition(@Path("exhibitionId") Long exhibitionId, @Body ApiArtworkId artworkId);
 }
