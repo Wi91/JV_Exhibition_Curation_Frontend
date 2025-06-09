@@ -94,7 +94,14 @@ public class ExhibitionListFragment extends Fragment implements RecyclerViewInte
     public void onItemClick(int position) {
         Exhibition exhibition = exhibitionList.get(position);
         Bundle bundle = new Bundle();
-        bundle.putParcelable("EXHIBITION", exhibition);
+        bundle.putLong("ID", exhibition.getId());
+        ExhibitionFragment exhibitionFragment = new ExhibitionFragment();
+        exhibitionFragment.setArguments(bundle);
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.baseFragment, exhibitionFragment)
+                .addToBackStack(null)
+                .commit();
 
 
     }

@@ -19,6 +19,8 @@ public class ExhibitionViewModel extends AndroidViewModel {
 
     ExhibitionsRepository repository;
 
+    MutableLiveData<Boolean> isSuccessful = new MutableLiveData<>();
+
 
     public ExhibitionViewModel(@NonNull Application application) {
         super(application);
@@ -34,6 +36,9 @@ public class ExhibitionViewModel extends AndroidViewModel {
         return isLoading;
     }
 
+    public LiveData<Boolean> getIsSuccessful(){
+        return isSuccessful;
+    }
     public void createNewExhibition(){
         isLoading.setValue(true);
         repository.createNewExhibition(isLoading);
@@ -42,6 +47,18 @@ public class ExhibitionViewModel extends AndroidViewModel {
     public void addArtworkToExhibition(Long exhibitionId, ApiArtworkId apiArtworkId){
         isLoading.setValue(true);
         repository.addArtworkToExhibition(exhibitionId, apiArtworkId, isLoading);
+    }
+    public MutableLiveData<Exhibition> getAllExhibitionArtworks(Long exhibitionId){
+        return repository.getAllExhibitionArtworks(exhibitionId);
+    }
 
+    public void deleteArtworkFromExhibition(Long exhibitionId, ApiArtworkId apiArtworkId){
+        isSuccessful.setValue(false);
+        repository.deleteArtworkFromExhibition(exhibitionId, apiArtworkId, isSuccessful);
+    }
+
+    public void deleteExhibition(Long exhibitionId){
+        isSuccessful.setValue(false);
+        repository.deleteExhibition(exhibitionId, isSuccessful);
     }
 }
