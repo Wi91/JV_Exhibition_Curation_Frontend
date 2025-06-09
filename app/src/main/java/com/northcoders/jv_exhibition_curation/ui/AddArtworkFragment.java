@@ -1,5 +1,6 @@
 package com.northcoders.jv_exhibition_curation.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -14,6 +15,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.northcoders.jv_exhibition_curation.R;
 import com.northcoders.jv_exhibition_curation.databinding.FragmentAddArtworkBinding;
+import com.northcoders.jv_exhibition_curation.model.ApiArtworkId;
 import com.northcoders.jv_exhibition_curation.model.Artwork;
 
 
@@ -40,6 +42,7 @@ public class AddArtworkFragment extends Fragment {
             importImage();
             setTextViews();
             initialiseBackButton();
+            initialiseAddArtworkButton();
         }
     }
 
@@ -78,6 +81,20 @@ public class AddArtworkFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_add_artwork, container, false);
         return binding.getRoot();
+    }
+
+    public void initialiseAddArtworkButton(){
+        binding.addToExhibitionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(artwork != null){
+                    ApiArtworkId apiArtworkId = new ApiArtworkId(artwork.getApiId(), artwork.getApiOrigin());
+                    Intent intent = new Intent(getContext(), AddToExhibitionActivity.class);
+                    intent.putExtra("ARTWORK", apiArtworkId);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
 }
