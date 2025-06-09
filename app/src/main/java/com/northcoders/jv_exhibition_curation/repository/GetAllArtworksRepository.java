@@ -23,6 +23,8 @@ public class GetAllArtworksRepository {
 
     private Application application;
 
+    private MutableLiveData<List<Artwork>> liveSearch = new MutableLiveData<>();
+
     public GetAllArtworksRepository(Application application) {
         this.application = application;
     }
@@ -55,4 +57,29 @@ public class GetAllArtworksRepository {
         return mutableLiveData;
     }
 
-}
+    public MutableLiveData<List<Artwork>> searchArtworks(String query, Integer page) {
+        ExhibitionCuratorService service = RetroFitInstance.getService();
+
+        Call<List<Artwork>> call = service.searchArtworks(query, page);
+        call.enqueue(new Callback<List<Artwork>>() {
+            @Override
+            public void onResponse(Call<List<Artwork>> call, Response<List<Artwork>> response) {
+                switch (response.code()) {
+                    case 200:
+                        liveSearch.setValue(response.body());
+                        break;
+                    case 416:
+                        Toast.makeText(application, "Out of Bounds", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Artwork>> call, Throwable t) {
+                Toast.makeText(application, "Network Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        return liveSearch;
+    }
+    }
