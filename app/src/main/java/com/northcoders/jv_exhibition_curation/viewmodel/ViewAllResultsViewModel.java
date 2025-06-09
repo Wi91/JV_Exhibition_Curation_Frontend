@@ -30,4 +30,7 @@ public class ViewAllResultsViewModel extends AndroidViewModel {
     public LiveData<Boolean> getIsLoading(){
         return isLoading;
     }
+    public MutableLiveData<List<Artwork>> searchArtworks(String query, Integer page){
+        return repository.searchArtworks(query, page);
+    }
 }
