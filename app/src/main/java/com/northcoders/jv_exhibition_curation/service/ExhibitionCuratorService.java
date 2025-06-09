@@ -1,13 +1,16 @@
 package com.northcoders.jv_exhibition_curation.service;
 
+import com.northcoders.jv_exhibition_curation.model.ApiArtworkId;
 import com.northcoders.jv_exhibition_curation.model.Artwork;
 import com.northcoders.jv_exhibition_curation.model.Exhibition;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ExhibitionCuratorService {
@@ -21,4 +24,6 @@ public interface ExhibitionCuratorService {
     @POST("exhibitions")
     Call<Void> createNewExhibition();
 
+    @POST("exhibitions/{exhibitionId}/artworks")
+    Call<Void> addArtworkToExhibition(@Path("id") Long exhibitionId, @Body ApiArtworkId artworkId);
 }

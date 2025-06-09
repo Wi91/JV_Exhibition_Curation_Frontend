@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.northcoders.jv_exhibition_curation.model.ApiArtworkId;
 import com.northcoders.jv_exhibition_curation.model.Exhibition;
 import com.northcoders.jv_exhibition_curation.repository.ExhibitionsRepository;
 
@@ -36,5 +37,11 @@ public class ExhibitionViewModel extends AndroidViewModel {
     public void createNewExhibition(){
         isLoading.setValue(true);
         repository.createNewExhibition(isLoading);
+    }
+
+    public void addArtworkToExhibition(Long exhibitionId, ApiArtworkId apiArtworkId){
+        isLoading.setValue(true);
+        repository.addArtworkToExhibition(exhibitionId, apiArtworkId, isLoading);
+
     }
 }
