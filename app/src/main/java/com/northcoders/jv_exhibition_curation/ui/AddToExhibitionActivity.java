@@ -1,5 +1,8 @@
 package com.northcoders.jv_exhibition_curation.ui;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,17 +40,24 @@ public class AddToExhibitionActivity extends AppCompatActivity implements Recycl
     private ApiArtworkId apiArtworkId;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_to_exhibition);
+        viewModel = new ViewModelProvider(this).get(ExhibitionViewModel.class);
 
-       View loadingOverlay = findViewById(R.id.progressBarLayer);
+       View loadingOverlay = findViewById(R.id.loadingStateOverlay);
         apiArtworkId = getIntent().getParcelableExtra("ARTWORK");
 
-        viewModel = new ViewModelProvider(this).get(ExhibitionViewModel.class);
+        viewModel.getIsLoading().observe(this, isLoading -> {
+            if(isLoading != null){
+                loadingOverlay.setVisibility(isLoading ? VISIBLE:GONE);
+            }
+        });
         initialiseBackButton();
+        initialiseAddExhibitionButton();
         getAllExhibitions();
 
         }
@@ -81,6 +91,18 @@ public class AddToExhibitionActivity extends AppCompatActivity implements Recycl
                finish();
            }
        });
+    }
+
+    private void initialiseAddExhibitionButton(){
+        View createNewExhibitionButton = findViewById(R.id.createNewExhibitionButton);
+
+        createNewExhibitionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.createNewExhibition();
+               getAllExhibitions();
+            }
+        });
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.northcoders.jv_exhibition_curation.ui;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -51,6 +54,12 @@ public class DeleteArtworkFragment extends Fragment {
         setTextViews();
         initialiseBackButton();
         initialiseRemoveArtworkButton();
+
+        model.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if(isLoading != null){
+                binding.loadingStateOverlay.setVisibility(isLoading ? VISIBLE:GONE);
+            }
+        });
 
         model.getIsSuccessful().observe(getViewLifecycleOwner(), isSuccessful -> {
             if (isSuccessful) {

@@ -1,10 +1,14 @@
 package com.northcoders.jv_exhibition_curation.ui;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
@@ -17,6 +21,7 @@ import com.northcoders.jv_exhibition_curation.R;
 import com.northcoders.jv_exhibition_curation.databinding.FragmentAddArtworkBinding;
 import com.northcoders.jv_exhibition_curation.model.ApiArtworkId;
 import com.northcoders.jv_exhibition_curation.model.Artwork;
+import com.northcoders.jv_exhibition_curation.viewmodel.ViewAllResultsViewModel;
 
 
 public class AddArtworkFragment extends Fragment {
@@ -25,11 +30,14 @@ public class AddArtworkFragment extends Fragment {
 
     Artwork artwork;
 
+    ViewAllResultsViewModel viewModel;
+
     public AddArtworkFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(ViewAllResultsViewModel.class);
     }
 
     @Override
@@ -38,6 +46,12 @@ public class AddArtworkFragment extends Fragment {
 
         if(getArguments() != null) {
             artwork = getArguments().getParcelable("ARTWORK");
+
+            viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+                if(isLoading != null){
+                    binding.loadingStateOverlay.setVisibility(isLoading ? VISIBLE:GONE);
+                }
+            });
 
             importImage();
             setTextViews();

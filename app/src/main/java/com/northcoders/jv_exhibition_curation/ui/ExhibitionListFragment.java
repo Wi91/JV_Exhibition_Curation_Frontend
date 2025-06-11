@@ -1,5 +1,8 @@
 package com.northcoders.jv_exhibition_curation.ui;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -9,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,6 +85,11 @@ public class ExhibitionListFragment extends Fragment implements RecyclerViewInte
 
         getAllExhibitionResults();
         initialiseAddExhibitionButton();
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if(isLoading != null){
+                binding.loadingStateOverlay.setVisibility(isLoading ? VISIBLE:GONE);
+            }
+        });
     }
 
     @Override

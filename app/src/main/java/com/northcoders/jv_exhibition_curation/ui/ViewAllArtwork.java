@@ -33,7 +33,7 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
 
     ViewAllResultsViewModel viewModel;
 
-    int counter;
+    int counter = 1;
 
     ArrayList<Artwork> artworksList;
 
@@ -54,13 +54,12 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
     @Override
     public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        counter = 1;
         enableNavButtons("previous", false);
         initialiseNavButtons();
         getAllArtworkResults(counter);
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             if(isLoading != null){
-                binding.ViewAllArtworksProgressBar.setVisibility(isLoading ? VISIBLE:GONE);
+                binding.loadingStateOverlay.setVisibility(isLoading ? VISIBLE:GONE);
             }
         });
     }

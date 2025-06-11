@@ -49,16 +49,17 @@ public class ExhibitionViewModel extends AndroidViewModel {
         repository.addArtworkToExhibition(exhibitionId, apiArtworkId, isLoading);
     }
     public MutableLiveData<Exhibition> getAllExhibitionArtworks(Long exhibitionId){
-        return repository.getAllExhibitionArtworks(exhibitionId);
+        isLoading.setValue(true);
+        return repository.getAllExhibitionArtworks(exhibitionId, isLoading);
     }
 
     public void deleteArtworkFromExhibition(Long exhibitionId, ApiArtworkId apiArtworkId){
-        isSuccessful.setValue(false);
-        repository.deleteArtworkFromExhibition(exhibitionId, apiArtworkId, isSuccessful);
+        isSuccessful.setValue(true);
+        repository.deleteArtworkFromExhibition(exhibitionId, apiArtworkId, isSuccessful, isLoading);
     }
 
     public void deleteExhibition(Long exhibitionId){
-        isSuccessful.setValue(false);
-        repository.deleteExhibition(exhibitionId, isSuccessful);
+        isSuccessful.setValue(true);
+        repository.deleteExhibition(exhibitionId, isSuccessful, isLoading);
     }
 }

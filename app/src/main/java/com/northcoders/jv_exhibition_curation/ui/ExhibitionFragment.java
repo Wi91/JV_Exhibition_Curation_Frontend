@@ -1,5 +1,8 @@
 package com.northcoders.jv_exhibition_curation.ui;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -63,6 +66,12 @@ public class ExhibitionFragment extends Fragment implements RecyclerViewInterfac
         getArtworksInExhibition();
 
         initialiseDeleteButton();
+
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if(isLoading != null){
+                binding.loadingStateOverlay.setVisibility(isLoading ? VISIBLE:GONE);
+            }
+        });
 
         viewModel.getIsSuccessful().observe(getViewLifecycleOwner(), isSuccessful -> {
             if(isSuccessful){

@@ -57,13 +57,14 @@ public class GetAllArtworksRepository {
         return mutableLiveData;
     }
 
-    public MutableLiveData<List<Artwork>> searchArtworks(String query, Integer page) {
+    public MutableLiveData<List<Artwork>> searchArtworks(String query, Integer page, MutableLiveData<Boolean> isLoading) {
         ExhibitionCuratorService service = RetroFitInstance.getService();
 
         Call<List<Artwork>> call = service.searchArtworks(query, page);
         call.enqueue(new Callback<List<Artwork>>() {
             @Override
             public void onResponse(Call<List<Artwork>> call, Response<List<Artwork>> response) {
+                isLoading.setValue(false);
                 switch (response.code()) {
                     case 200:
                         liveSearch.setValue(response.body());
@@ -76,6 +77,7 @@ public class GetAllArtworksRepository {
 
             @Override
             public void onFailure(Call<List<Artwork>> call, Throwable t) {
+                isLoading.setValue(false);
                 Toast.makeText(application, "Network Error", Toast.LENGTH_SHORT).show();
 
             }

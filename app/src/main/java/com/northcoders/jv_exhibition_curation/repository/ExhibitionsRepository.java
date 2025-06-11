@@ -91,7 +91,7 @@ public class ExhibitionsRepository {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                isLoading.setValue(true);
+                isLoading.setValue(false);
                 switch (response.code()) {
                     case 200:
                         Toast.makeText(application, "Artwork Added", Toast.LENGTH_SHORT).show();
@@ -109,18 +109,20 @@ public class ExhibitionsRepository {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                isLoading.setValue(false);
                 Toast.makeText(application, "Failed to add artwork", Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
-    public MutableLiveData<Exhibition> getAllExhibitionArtworks(Long exhibitionId) {
+    public MutableLiveData<Exhibition> getAllExhibitionArtworks(Long exhibitionId, MutableLiveData<Boolean> isLoading) {
         ExhibitionCuratorService service = RetroFitInstance.getService();
         Call<Exhibition> call = service.getAllExhibitionArtworks(exhibitionId);
         call.enqueue(new Callback<Exhibition>() {
             @Override
             public void onResponse(Call<Exhibition> call, Response<Exhibition> response) {
+                isLoading.setValue(false);
                 switch (response.code()) {
                     case 200:
                         exhibition.setValue(response.body());
@@ -132,18 +134,21 @@ public class ExhibitionsRepository {
 
             @Override
             public void onFailure(Call<Exhibition> call, Throwable t) {
+                isLoading.setValue(false);
                 Toast.makeText(application, "Server Error", Toast.LENGTH_SHORT).show();
             }
         });
         return exhibition;
     }
 
-    public void deleteArtworkFromExhibition(Long exhibitionId, ApiArtworkId apiArtworkId, MutableLiveData<Boolean> isSuccessful) {
+    public void deleteArtworkFromExhibition(Long exhibitionId, ApiArtworkId apiArtworkId, MutableLiveData<Boolean> isSuccessful, MutableLiveData<Boolean> isLoading) {
         ExhibitionCuratorService service = RetroFitInstance.getService();
         Call<Void> call = service.deleteArtworkFromExhibition(exhibitionId, apiArtworkId);
         call.enqueue((new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                isLoading.setValue(false);
+
                 switch (response.code()) {
                     case 200:
                         isSuccessful.setValue(true);
@@ -163,17 +168,19 @@ public class ExhibitionsRepository {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                isLoading.setValue(false);
                 Toast.makeText(application, "Server Error", Toast.LENGTH_SHORT).show();
             }
         }));
     }
 
-    public void deleteExhibition(Long exhibitionId, MutableLiveData<Boolean> isSuccessful){
+    public void deleteExhibition(Long exhibitionId, MutableLiveData<Boolean> isSuccessful, MutableLiveData<Boolean> isLoading){
         ExhibitionCuratorService service = RetroFitInstance.getService();
         Call<Void> call = service.deleteExhibition(exhibitionId);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
+                isLoading.setValue(false);
                 isSuccessful.setValue(true);
                 switch (response.code()){
                     case 204:
@@ -191,6 +198,7 @@ public class ExhibitionsRepository {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+                isLoading.setValue(false);
                 Toast.makeText(application, "Internal Server Error", Toast.LENGTH_SHORT).show();
             }
         });
