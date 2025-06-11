@@ -21,7 +21,7 @@ import retrofit2.http.Query;
 public interface ExhibitionCuratorService {
 
     @GET("artwork/home")
-    Call<List<Artwork>> getAllHomeArtworks(@Query(value = "page") Integer page);
+    Call<List<Artwork>> getAllHomeArtworks(@Query(value = "page") Integer page, @Query(value = "origin") String origin);
 
     @GET("exhibitions")
     Call<List<Exhibition>> getAllExhibitions();

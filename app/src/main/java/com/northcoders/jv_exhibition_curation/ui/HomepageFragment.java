@@ -37,11 +37,15 @@ FragmentHomepageBinding binding;
     private void initializeButtons() {
         Button viewAllArtworksButton = binding.viewAllArtworksButton;
         Button searchArtworksButton = binding.searchArtworksButton;
+        Button viewAllMetropolitanArtworkButton = binding.viewAllMetropolitanArtworksButton;
 
         viewAllArtworksButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ViewAllArtwork viewAllArtwork = new ViewAllArtwork();
+                Bundle bundle = new Bundle();
+                bundle.putString("ORIGIN", "Chicago_Institute");
+                viewAllArtwork.setArguments(bundle);
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.baseFragment, viewAllArtwork)
@@ -61,6 +65,20 @@ FragmentHomepageBinding binding;
                 nav.setOnItemSelectedListener(null); // Temporarily remove listener
                 nav.setSelectedItemId(R.id.search_button); // Update UI highlight only
                 nav.setOnItemSelectedListener((MainActivity) getActivity()); // Re-attach listener
+            }
+        });
+
+        viewAllMetropolitanArtworkButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewAllArtwork viewAllArtwork = new ViewAllArtwork();
+                Bundle bundle = new Bundle();
+                bundle.putString("ORIGIN", "Metropolitan_Museum");
+                viewAllArtwork.setArguments(bundle);
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.baseFragment, viewAllArtwork)
+                        .commit();
             }
         });
     }

@@ -22,9 +22,9 @@ public class ViewAllResultsViewModel extends AndroidViewModel {
         this.repository = new GetAllArtworksRepository(application);
     }
 
-    public MutableLiveData<List<Artwork>> getAllArtworks(Integer page) {
+    public MutableLiveData<List<Artwork>> getAllArtworks(Integer page, String origin) {
         isLoading.setValue(true);
-        return repository.getMutableLiveData(page, isLoading);
+        return repository.getMutableLiveData(page, origin, isLoading);
     }
 
     public LiveData<Boolean> getIsLoading(){

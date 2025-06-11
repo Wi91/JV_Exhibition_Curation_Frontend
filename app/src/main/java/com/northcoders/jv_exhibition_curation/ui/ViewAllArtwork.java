@@ -41,6 +41,8 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
 
     ViewAllArtworksAdapter adapter;
 
+    String origin;
+
 
 
     public ViewAllArtwork() {}
@@ -48,6 +50,9 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            origin = getArguments().getString("ORIGIN");
+        }
         viewModel = new ViewModelProvider(this).get(ViewAllResultsViewModel.class);
     }
 
@@ -56,7 +61,7 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
         super.onCreate(savedInstanceState);
         enableNavButtons("previous", false);
         initialiseNavButtons();
-        getAllArtworkResults(counter);
+        getAllArtworkResults(counter, origin);
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
             if(isLoading != null){
                 binding.loadingStateOverlay.setVisibility(isLoading ? VISIBLE:GONE);
@@ -85,7 +90,7 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
             @Override
             public void onClick(View view) {
 
-                getAllArtworkResults(counter - 1);
+                getAllArtworkResults(counter - 1, origin);
             }
         });
     }
@@ -94,14 +99,14 @@ public class ViewAllArtwork extends Fragment implements RecyclerViewInterface {
         binding.nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAllArtworkResults(counter + 1);
+                getAllArtworkResults(counter + 1, origin);
 
             }
         });
     }
 
-    private void getAllArtworkResults(Integer page) {
-        viewModel.getAllArtworks(page).observe(getViewLifecycleOwner(), new Observer<List<Artwork>>() {
+    private void getAllArtworkResults(Integer page, String origin) {
+        viewModel.getAllArtworks(page, origin).observe(getViewLifecycleOwner(), new Observer<List<Artwork>>() {
             @Override
             public void onChanged(List<Artwork> artworks) {
                 artworksList = (ArrayList<Artwork>) artworks;

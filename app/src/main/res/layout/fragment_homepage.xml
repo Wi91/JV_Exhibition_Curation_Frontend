@@ -36,28 +36,42 @@
             app:layout_constraintTop_toBottomOf="@+id/appName"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="100dp"
-            android:text="View All Artworks"
+            android:layout_marginTop="55dp"
+            android:text="Art Institute of Chicago"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="23sp"
             android:fontFamily="@font/indie_flower_regular"
             android:background="@drawable/homepage_buttons"
-
             />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/searchArtworksButton"
+            android:id="@+id/viewAllMetropolitanArtworksButton"
             android:layout_width="300dp"
             android:layout_height="75dp"
             app:layout_constraintTop_toBottomOf="@+id/viewAllArtworksButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="40dp"
+            android:text="Met Museum of Art"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            android:fontFamily="@font/indie_flower_regular"
+            android:background="@drawable/homepage_buttons"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/searchArtworksButton"
+            android:layout_width="300dp"
+            android:layout_height="75dp"
+            app:layout_constraintTop_toBottomOf="@+id/viewAllMetropolitanArtworksButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="60dp"
             android:text="Search Artworks"
             android:textSize="25sp"
             android:textColor="@color/white"
             android:fontFamily="@font/indie_flower_regular"
-            android:background="@drawable/homepage_buttons"
+            android:background="@drawable/search_button_background"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

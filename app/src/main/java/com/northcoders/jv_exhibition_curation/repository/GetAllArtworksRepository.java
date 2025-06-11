@@ -29,10 +29,10 @@ public class GetAllArtworksRepository {
         this.application = application;
     }
 
-    public MutableLiveData<List<Artwork>> getMutableLiveData(Integer page, MutableLiveData<Boolean> isLoading){
+    public MutableLiveData<List<Artwork>> getMutableLiveData(Integer page, String origin, MutableLiveData<Boolean> isLoading){
         ExhibitionCuratorService service = RetroFitInstance.getService();
 
-        Call<List<Artwork>> call = service.getAllHomeArtworks(page);
+        Call<List<Artwork>> call = service.getAllHomeArtworks(page, origin);
         call.enqueue(new Callback<List<Artwork>>() {
             @Override
             public void onResponse(Call<List<Artwork>> call, Response<List<Artwork>> response) {
