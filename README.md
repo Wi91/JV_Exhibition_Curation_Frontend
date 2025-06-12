@@ -55,18 +55,9 @@ Click Run to build and install the app
 - Android device or emulator with **Internet access**
 - Minimum Android SDK version **24** (Android 7.0 Nougat)
 - Target SDK version **35** (Android 13)
-- Android Studio with Java 11 or higher  
-
-## 🔧 Configuration
-
-- The app requires the following permissions:
-    - **Internet access** (`android.permission.INTERNET`) to fetch data from APIs
-    - **Network state access** (`android.permission.ACCESS_NETWORK_STATE`) to monitor connectivity
-- Custom network security configurations are applied via `network_security_config.xml`  
-
+- Android Studio with Java 11 or higher
 
 
 ## 🙋‍♂️ Author
-
-**Will El-Ammar**  
+ 
 GitHub: [@Wi91](https://github.com/Wi91)
