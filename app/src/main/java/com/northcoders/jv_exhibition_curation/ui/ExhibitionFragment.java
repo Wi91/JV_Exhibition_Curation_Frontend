@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.northcoders.jv_exhibition_curation.R;
 import com.northcoders.jv_exhibition_curation.adapter.ExhibitionListAdapter;
@@ -43,14 +45,19 @@ public class ExhibitionFragment extends Fragment implements RecyclerViewInterfac
 
     private Long exhibitionId;
 
+    private ArrayList<Artwork> filteredList;
 
-    public ExhibitionFragment() {}
+    private String query;
+
+
+    public ExhibitionFragment() {
+    }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getArguments() != null){
+        if (getArguments() != null) {
             exhibitionId = getArguments().getLong("ID");
         }
         viewModel = new ViewModelProvider(this).get(ExhibitionViewModel.class);
@@ -58,23 +65,25 @@ public class ExhibitionFragment extends Fragment implements RecyclerViewInterfac
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         initialiseBackButton();
+
+        initialiseSearchBar();
 
         getArtworksInExhibition();
 
         initialiseDeleteButton();
 
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
-            if(isLoading != null){
-                binding.loadingStateOverlay.setVisibility(isLoading ? VISIBLE:GONE);
+            if (isLoading != null) {
+                binding.loadingStateOverlay.setVisibility(isLoading ? VISIBLE : GONE);
             }
         });
 
         viewModel.getIsSuccessful().observe(getViewLifecycleOwner(), isSuccessful -> {
-            if(isSuccessful){
+            if (isSuccessful) {
                 getParentFragmentManager().popBackStack();
             }
         });
@@ -85,7 +94,7 @@ public class ExhibitionFragment extends Fragment implements RecyclerViewInterfac
             @Override
             public void onChanged(Exhibition exhibition) {
                 curExhibition = exhibition;
-                if(curExhibition != null){
+                if (curExhibition != null) {
                     artworkArrayList = (ArrayList<Artwork>) curExhibition.getArtList();
                     displayInRecyclerView();
                     binding.exhibitionName.setText(exhibition.getTitle());
@@ -113,6 +122,37 @@ public class ExhibitionFragment extends Fragment implements RecyclerViewInterfac
         });
     }
 
+    private void initialiseSearchBar() {
+        binding.exhibitionsSearchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
+    }
+
+    private void filterList(String searchQuery) {
+        filteredList = new ArrayList<>();
+
+        for (Artwork artwork : artworkArrayList) {
+            if (artwork.getTitle().toLowerCase().contains(searchQuery.toLowerCase())
+                    || artwork.getArtistName().toLowerCase().contains(searchQuery.toLowerCase())) {
+                filteredList.add(artwork);
+            }
+        }
+        if (filteredList.isEmpty()) {
+            Toast.makeText(getContext(), "No Artworks Found", Toast.LENGTH_SHORT).show();
+        } else {
+            adapter.setFilteredList(filteredList);
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,18 +163,35 @@ public class ExhibitionFragment extends Fragment implements RecyclerViewInterfac
 
     @Override
     public void onItemClick(int position) {
-        Artwork artwork = artworkArrayList.get(position);
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("ARTWORK", artwork);
-        bundle.putLong("ID", exhibitionId);
-        DeleteArtworkFragment deleteArtworkFragment = new DeleteArtworkFragment();
-        deleteArtworkFragment.setArguments(bundle);
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(R.id.baseFragment, deleteArtworkFragment)
-                .addToBackStack(null)
-                .commit();
 
+        if(filteredList == null || filteredList.isEmpty()) {
+            Artwork artwork = artworkArrayList.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("ARTWORK", artwork);
+            bundle.putLong("ID", exhibitionId);
+            DeleteArtworkFragment deleteArtworkFragment = new DeleteArtworkFragment();
+            deleteArtworkFragment.setArguments(bundle);
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.baseFragment, deleteArtworkFragment)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            Artwork artwork = filteredList.get(position);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("ARTWORK", artwork);
+            bundle.putLong("ID", exhibitionId);
+            DeleteArtworkFragment deleteArtworkFragment = new DeleteArtworkFragment();
+            deleteArtworkFragment.setArguments(bundle);
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.baseFragment, deleteArtworkFragment)
+                    .addToBackStack(null)
+                    .commit();
+
+            binding.exhibitionsSearchBar.setQuery("", false);
+            binding.exhibitionsSearchBar.clearFocus();
+        }
     }
 
     private void initialiseDeleteButton() {

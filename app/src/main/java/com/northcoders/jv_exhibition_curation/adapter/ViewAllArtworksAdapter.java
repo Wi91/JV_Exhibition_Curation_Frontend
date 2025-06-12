@@ -15,6 +15,7 @@ import com.northcoders.jv_exhibition_curation.R;
 import com.northcoders.jv_exhibition_curation.databinding.ArtworkItemLayoutBinding;
 import com.northcoders.jv_exhibition_curation.model.Artwork;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ViewAllArtworksAdapter extends RecyclerView.Adapter<ViewAllArtworksAdapter.ViewAllArtworksViewHolder> {
@@ -40,6 +41,11 @@ public class ViewAllArtworksAdapter extends RecyclerView.Adapter<ViewAllArtworks
                 false);
 
         return new ViewAllArtworksViewHolder(binding,recyclerViewInterface);
+    }
+
+    public void setFilteredList(ArrayList<Artwork> filteredList){
+        this.artworkList = filteredList;
+        notifyDataSetChanged();
     }
 
     @Override
