@@ -47,6 +47,11 @@ Allow Gradle to sync and download dependencies
 
 Connect an Android device or start an emulator
 
+> Note: 
+>  - The retrofit ```BASE_URL``` is dependent on the localhost server that the backend is hosted on. This is set to 8080 by default.
+>  - If running the app from an Android device, the Retrofit ```BASE_URL``` will need to be altered to match the device's IP address.
+
+
 Click Run to build and install the app
 
 
